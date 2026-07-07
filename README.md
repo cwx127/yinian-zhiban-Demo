@@ -1,57 +1,128 @@
-# React + TypeScript + Vite
+# 颐年智伴 · Yinian Zhiban
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+面向银发群体的智能康养产品设计系统——以温暖、清晰、无障碍为核心，服务于日常健康提醒、家人关怀互动和紧急求助等场景。
 
-Currently, two official plugins are available:
+> 温暖守护每一天，让科技陪伴银发生活
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 产品理念
 
-## Expanding the ESLint configuration
+### 核心定位
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**颐年智伴**是一款以 LLM 驱动的老年 AI 智能体，致力于构建覆盖健康监测、紧急呼叫、用药提醒与情感陪伴四大场景的全场景解决方案。
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 设计哲学
+
+- **语音优先，零界面**：所有核心操作可通过语音完成，界面仅作为辅助确认，大幅降低数字素养门槛
+- **主动关怀，智能感知**：基于智能体循环架构，实现"感知老人状态 → 判断需求 → 主动介入"的闭环
+- **温暖陪伴，科技向善**：以耐心、稳重的家庭护理人员形象，打造有温度的人机交互体验
+
+### 解决的核心痛点
+
+| 痛点 | 解决方案 |
+|------|----------|
+| 健康管理断层（慢性病监测缺乏） | 语音录入血压/血糖/心率，自动生成趋势报告 |
+| 紧急响应延迟（跌倒后等待救援超2小时） | 传感器跌倒检测 + 语音确认 + 自动呼叫 |
+| 用药依从性差（60%漏服错服） | 语音提醒 + 视觉描述 + 漏服通知子女 |
+| 情感孤独突出（40%中度以上孤独感） | 基于长期记忆的个性化闲聊，有情感温度的陪伴 |
+
+## 技术栈
+
+- **前端框架**: React 18 + TypeScript
+- **构建工具**: Vite
+- **样式方案**: Tailwind CSS 3 + 自定义设计系统 Tokens
+- **状态管理**: Zustand
+- **图标库**: Lucide React
+- **字体**: Lora（衬线标题）+ Noto Sans SC（无衬线正文）
+
+## 设计系统
+
+### 色彩体系
+
+- **主色**: Teal (#2e8b7b) — 沉稳温和的蓝绿色，传达信任感和安全感
+- **次级色**: Warm (#d4956a) — 温暖的琥珀色，传达关怀的温度
+- **背景**: Warm Off-white (#faf8f5) — 远离冷灰，更像家居环境的自然色调
+
+### 适老化设计特点
+
+- **大字号**: 正文18px、标题40px，服务于可读性
+- **大触控区域**: 按钮52px最小高度，远超44px标准
+- **高对比度**: WCAG AA标准，确保视力不佳用户可读
+- **简洁交互**: 一级导航≤3项，页面层级≤2层
+
+## 项目结构
+
+```
+src/
+├── components/           # 设计系统组件
+│   ├── Button.tsx       # 按钮（4种变体/3种尺寸）
+│   ├── Card.tsx         # 卡片（3种变体）
+│   ├── Input.tsx        # 输入框（聚焦环/错误状态）
+│   ├── Navigation.tsx   # 导航栏
+│   ├── Modal.tsx        # 弹窗（半透明遮罩）
+│   └── Tag.tsx          # 标签（4种语义状态）
+├── pages/               # 页面组件
+│   ├── Dashboard.tsx    # 首页仪表盘（健康概览/智能提醒）
+│   ├── HealthReport.tsx # 健康报告（血压/用药/睡眠/血糖/运动/体温）
+│   └── Settings.tsx     # 个人设置（信息管理/用药提醒配置）
+├── store/               # Zustand状态管理
+├── data/                # Mock数据
+└── styles/              # 设计系统样式
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 安装依赖
+npm install
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# TypeScript类型检查
+npm run check
 ```
+
+## 页面功能
+
+### 首页仪表盘
+- Hero区域：品牌展示与核心价值传达
+- 统计面板：睡眠时长、今日步数、血压、体温实时展示
+- 智能提醒卡片：待处理提醒、健康日报、家人关怀、一键求助
+
+### 健康报告
+- 天气卡片：今日天气与户外活动建议
+- 健康指标列表：血压监测、用药记录、睡眠质量、血糖检测、运动步数、体温记录
+- 操作按钮：导出报告、分享给家人
+
+### 个人设置
+- 个人信息管理：姓名、年龄、手机号、紧急联系人
+- 用药提醒设置：提醒时间配置
+- 表单验证：错误状态提示与成功弹窗
+
+## 核心组件
+
+| 组件 | 变体 | 特点 |
+|------|------|------|
+| Button | primary/secondary/outline/ghost | 大触控区域、圆角温和、状态反馈柔和 |
+| Card | default/elevated/outlined | 温暖容器、柔和阴影、内容留白充足 |
+| Input | - | 大字号标签、宽高触控友好、聚焦过渡温润 |
+| Navigation | top-nav | 清晰层级、大点击区域 |
+| Modal | default/wide | 半透明遮罩温润、内容区圆角柔和 |
+| Tag | default/success/warning/error | 状态标签色彩温润、圆角胶囊形 |
+
+## 响应式设计
+
+- **桌面端**: 双列卡片网格、四列统计面板
+- **平板端**: 单列卡片布局
+- **移动端**: 折叠导航、单列统计、触控优化
+
+## 许可证
+
+MIT License
+
+---
+
+© 2026 颐年智伴 — 温暖守护每一天

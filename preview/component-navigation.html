@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>导航栏 - OLDER UI</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<style>
+body { margin: 0; padding: var(--space-3); background: var(--color-surface); font-family: var(--font-body); color: var(--color-on-surface); }
+.specimen { max-width: 960px; margin: 0 auto; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-2) 0; margin-bottom: var(--space-2); }
+.stage { display: flex; flex-direction: column; gap: var(--space-2); }
+.story { display: flex; flex-direction: column; gap: var(--space-2); }
+.rail { display: flex; flex-direction: column; gap: var(--space-2); }
+.story-label { font-size: var(--font-size-caption); font-weight: var(--font-weight-eyebrow); color: var(--color-on-surface-variant); text-transform: uppercase; letter-spacing: 0.06em; }
+.divider { border: none; border-top: 1px solid var(--color-border); margin: var(--space-2) 0; }
+.nav-demo { width: 100%; }
+
+/* @component-css-start */
+/* Top Navigation */
+.top-nav { display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--color-surface); border-bottom: 1px solid var(--color-border); padding: var(--space-3) var(--space-6); height: 64px; box-sizing: border-box; }
+.top-nav-logo { font-family: var(--font-heading); font-size: var(--font-size-h4); font-weight: var(--font-weight-h4); color: var(--color-primary); white-space: nowrap; }
+.top-nav-links { display: flex; align-items: center; gap: var(--space-5); }
+.top-nav-link { font-size: var(--font-size-body); font-weight: var(--font-weight-body); color: var(--color-on-surface-variant); text-decoration: none; white-space: nowrap; padding: var(--space-1) 0; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; }
+.top-nav-link:hover { color: var(--color-on-surface); border-bottom-color: var(--color-on-surface-variant); }
+.top-nav-link.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: var(--font-weight-h4); }
+.top-nav-actions { display: flex; align-items: center; gap: var(--space-3); }
+.top-nav-avatar { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-primary); color: var(--color-on-primary); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-caption); font-weight: 600; flex-shrink: 0; }
+
+/* Bottom Navigation */
+.bottom-nav { display: flex; align-items: center; justify-content: space-around; width: 100%; background: var(--color-surface-container); border-top: 1px solid var(--color-border); padding: var(--space-2) 0; height: 72px; box-sizing: border-box; }
+.bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--color-on-surface-variant); padding: var(--space-1) var(--space-4); transition: color .15s; min-width: 56px; flex-shrink: 0; }
+.bottom-nav-item:hover { color: var(--color-on-surface); }
+.bottom-nav-item.active { color: var(--color-primary); }
+.bottom-nav-item svg { width: 24px; height: 24px; flex-shrink: 0; }
+.bottom-nav-label { font-size: var(--font-size-eyebrow); font-weight: var(--font-weight-caption); white-space: nowrap; }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+  <div class="stage">
+    <div class="story">
+      <span class="story-label">Top Navigation</span>
+      <div class="rail" data-evidence-sample="Top Navigation">
+        <div class="nav-demo">
+          <nav class="top-nav">
+            <span class="top-nav-logo">颐年智伴</span>
+            <div class="top-nav-links">
+              <a href="#" class="top-nav-link active">首页</a>
+              <a href="#" class="top-nav-link">健康</a>
+              <a href="#" class="top-nav-link">消息</a>
+              <a href="#" class="top-nav-link">我的</a>
+            </div>
+            <div class="top-nav-actions">
+              <div class="top-nav-avatar">王</div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="story">
+      <span class="story-label">Bottom Navigation</span>
+      <div class="rail" data-evidence-sample="Bottom Navigation">
+        <div class="nav-demo">
+          <nav class="bottom-nav">
+            <a href="#" class="bottom-nav-item active">
+              <i data-lucide="home" style="width:24px;height:24px;display:inline-block"></i>
+              <span class="bottom-nav-label">首页</span>
+            </a>
+            <a href="#" class="bottom-nav-item">
+              <i data-lucide="heart" style="width:24px;height:24px;display:inline-block"></i>
+              <span class="bottom-nav-label">健康</span>
+            </a>
+            <a href="#" class="bottom-nav-item">
+              <i data-lucide="message-circle" style="width:24px;height:24px;display:inline-block"></i>
+              <span class="bottom-nav-label">消息</span>
+            </a>
+            <a href="#" class="bottom-nav-item">
+              <i data-lucide="user" style="width:24px;height:24px;display:inline-block"></i>
+              <span class="bottom-nav-label">我的</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

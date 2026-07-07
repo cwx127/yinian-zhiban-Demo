@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "components": [
+    {
+      "slug": "button",
+      "name": "按钮",
+      "category": "interactive",
+      "sourceKind": "from-scratch",
+      "confidence": "high",
+      "variantCount": 4,
+      "priorityHint": 1,
+      "keyInsightSeed": "大触控区域、圆角温和、状态反馈柔和"
+    },
+    {
+      "slug": "card",
+      "name": "卡片",
+      "category": "layout",
+      "sourceKind": "from-scratch",
+      "confidence": "high",
+      "variantCount": 3,
+      "priorityHint": 2,
+      "keyInsightSeed": "温暖容器、柔和阴影、内容留白充足"
+    },
+    {
+      "slug": "input",
+      "name": "输入框",
+      "category": "form",
+      "sourceKind": "from-scratch",
+      "confidence": "high",
+      "variantCount": 3,
+      "priorityHint": 3,
+      "keyInsightSeed": "大字号标签、宽高触控友好、聚焦过渡温润"
+    },
+    {
+      "slug": "navigation",
+      "name": "导航栏",
+      "category": "navigation",
+      "sourceKind": "from-scratch",
+      "confidence": "medium",
+      "variantCount": 2,
+      "priorityHint": 4,
+      "keyInsightSeed": "清晰层级、大点击区域、底部导航适配移动端"
+    },
+    {
+      "slug": "modal",
+      "name": "弹窗",
+      "category": "overlay",
+      "sourceKind": "from-scratch",
+      "confidence": "medium",
+      "variantCount": 2,
+      "priorityHint": 5,
+      "keyInsightSeed": "半透明遮罩温润、内容区圆角柔和、操作按钮醒目"
+    },
+    {
+      "slug": "tag",
+      "name": "标签",
+      "category": "data-display",
+      "sourceKind": "from-scratch",
+      "confidence": "medium",
+      "variantCount": 3,
+      "priorityHint": 6,
+      "keyInsightSeed": "状态标签色彩温润、圆角胶囊形、字号偏大易读"
+    }
+  ]
+}

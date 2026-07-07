@@ -1,0 +1,41 @@
+{
+  "slug": "tag",
+  "schemaVersion": 2,
+  "name": "标签",
+  "category": "data-display",
+  "sourceKind": "from-scratch",
+  "confidence": "medium",
+  "semanticTypeCandidates": [
+    { "type": "Tag/Badge", "evidence": "Small label chip with warm color fill, pill shape" }
+  ],
+  "variantDimensions": [
+    { "axis": "color", "values": ["default", "success", "warning", "error"] },
+    { "axis": "size", "values": ["sm", "md"] }
+  ],
+  "representativeVariants": [
+    {
+      "name": "Default Medium",
+      "whySelected": "Standard status tag",
+      "traits": { "background": "var(--color-surface-container-low)", "color": "var(--color-on-surface-variant)", "borderRadius": "var(--radius-full)", "padding": "var(--space-1) var(--space-3)", "fontSize": "var(--font-size-caption)", "fontWeight": "500" },
+      "childrenDigest": "label(text)"
+    },
+    {
+      "name": "Success",
+      "whySelected": "Positive status — health good, task done",
+      "traits": { "background": "rgba(34,139,34,0.12)", "color": "var(--color-success)" },
+      "childrenDigest": "label(text)"
+    },
+    {
+      "name": "Warning Medium",
+      "whySelected": "Attention needed — medication reminder, low battery",
+      "traits": { "background": "rgba(212,149,106,0.15)", "color": "var(--color-warning)" },
+      "childrenDigest": "label(text)"
+    }
+  ],
+  "anatomy": "chip > label(text)",
+  "structurePatterns": ["status-tag", "filter-tag"],
+  "usageHints": { "priorityHint": 6, "legibility": "slightly larger than typical tags for elderly readability", "density": "normal" },
+  "doNotInvent": ["removable-tag", "icon-tag", "tag-group"],
+  "unknowns": [],
+  "keyInsightSeed": "状态标签色彩温润、圆角胶囊形、字号偏大易读"
+}

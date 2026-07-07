@@ -1,0 +1,34 @@
+{
+  "slug": "modal",
+  "schemaVersion": 2,
+  "name": "弹窗",
+  "category": "overlay",
+  "sourceKind": "from-scratch",
+  "confidence": "medium",
+  "semanticTypeCandidates": [
+    { "type": "DialogModal", "evidence": "Overlay dialog with warm backdrop, rounded container" }
+  ],
+  "variantDimensions": [
+    { "axis": "variant", "values": ["confirmation", "informational"] }
+  ],
+  "representativeVariants": [
+    {
+      "name": "Confirmation Modal",
+      "whySelected": "Confirm/cancel dialog — large buttons for elderly",
+      "traits": { "background": "var(--color-card)", "borderRadius": "var(--radius-xl)", "padding": "var(--space-8)", "maxWidth": "400px", "boxShadow": "var(--shadow-5)", "backdrop": "rgba(45,42,38,0.4)" },
+      "childrenDigest": "title(text) + message(text) + action-row(cancel-button + confirm-button)"
+    },
+    {
+      "name": "Informational Modal",
+      "whySelected": "Info/alert display — warm accent icon area",
+      "traits": { "background": "var(--color-card)", "borderRadius": "var(--radius-xl)", "padding": "var(--space-8)", "maxWidth": "420px" },
+      "childrenDigest": "icon-area + title(text) + message(text) + dismiss-button"
+    }
+  ],
+  "anatomy": "overlay(backdrop) > dialog > [icon-area] + title(text) + message(text) + action-row(button[])",
+  "structurePatterns": ["confirm-dialog", "alert-dialog"],
+  "usageHints": { "priorityHint": 5, "enterAnimation": "gentle fade+scale", "density": "spacious" },
+  "doNotInvent": ["full-screen-modal", "drawer-modal", "nested-modal"],
+  "unknowns": [],
+  "keyInsightSeed": "半透明遮罩温润、内容区圆角柔和、操作按钮醒目"
+}

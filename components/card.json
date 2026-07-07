@@ -1,0 +1,40 @@
+{
+  "slug": "card",
+  "schemaVersion": 2,
+  "name": "卡片",
+  "category": "layout",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "semanticTypeCandidates": [
+    { "type": "Card", "evidence": "Content container with warm shadow and rounded corners" }
+  ],
+  "variantDimensions": [
+    { "axis": "variant", "values": ["default", "elevated", "outlined"] }
+  ],
+  "representativeVariants": [
+    {
+      "name": "Default Card",
+      "whySelected": "Standard content card for health tips, reminders",
+      "traits": { "background": "var(--color-card)", "borderRadius": "var(--radius-xl)", "padding": "var(--space-6)", "boxShadow": "var(--shadow-2)", "border": "1px solid var(--color-border)" },
+      "childrenDigest": "title(text) + description(text) + optional action-area"
+    },
+    {
+      "name": "Elevated Card",
+      "whySelected": "Prominent card for daily summary or alerts",
+      "traits": { "background": "var(--color-card)", "borderRadius": "var(--radius-xl)", "padding": "var(--space-6)", "boxShadow": "var(--shadow-3)", "border": "none" },
+      "childrenDigest": "icon + title(text) + body(text) + action(button)"
+    },
+    {
+      "name": "Outlined Card",
+      "whySelected": "Lightweight container for settings or lists",
+      "traits": { "background": "transparent", "borderRadius": "var(--radius-xl)", "padding": "var(--space-6)", "boxShadow": "none", "border": "1.5px solid var(--color-outline)" },
+      "childrenDigest": "title(text) + list items"
+    }
+  ],
+  "anatomy": "container > [header(icon? + title)] [body(content)] [footer(action?)]",
+  "structurePatterns": ["content-card", "interactive-card"],
+  "usageHints": { "priorityHint": 2, "whitespace": "generous internal padding", "density": "spacious" },
+  "doNotInvent": ["horizontal-card", "media-card", "card-carousel"],
+  "unknowns": [],
+  "keyInsightSeed": "温暖容器、柔和阴影、内容留白充足"
+}

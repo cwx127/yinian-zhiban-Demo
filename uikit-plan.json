@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "corePreviewComponents": [
+    { "slug": "button", "reason": "Primary interactive element, high confidence", "evidenceFile": "components/button.json", "priority": 1 },
+    { "slug": "card", "reason": "Core layout container, high confidence", "evidenceFile": "components/card.json", "priority": 2 },
+    { "slug": "input", "reason": "Form entry point, high confidence", "evidenceFile": "components/input.json", "priority": 3 },
+    { "slug": "navigation", "reason": "App shell navigation, medium confidence", "evidenceFile": "components/navigation.json", "priority": 4 },
+    { "slug": "modal", "reason": "Overlay interaction pattern, medium confidence", "evidenceFile": "components/modal.json", "priority": 5 },
+    { "slug": "tag", "reason": "Status display element, medium confidence", "evidenceFile": "components/tag.json", "priority": 6 }
+  ],
+  "supportEvidenceComponents": [],
+  "allowedComponents": ["button", "card", "input", "navigation", "modal", "tag"],
+  "screenBlueprints": [
+    { "name": "Home Dashboard", "purpose": "Elderly user daily overview with health tips and reminders", "componentSlugs": ["navigation", "card", "button", "tag"], "layoutIntent": "top-nav + card-grid" },
+    { "name": "Health Report", "purpose": "Daily health summary with status indicators", "componentSlugs": ["card", "tag", "button"], "layoutIntent": "single-column cards" },
+    { "name": "Settings", "purpose": "User profile and preferences form", "componentSlugs": ["input", "button", "navigation"], "layoutIntent": "form-layout" }
+  ],
+  "forbiddenInventedComponents": [],
+  "needsNarrative": false,
+  "lowConfidence": false,
+  "warnings": ["uikit-plan generated manually as fallback — generate-uikit-plan.mjs failed"]
+}

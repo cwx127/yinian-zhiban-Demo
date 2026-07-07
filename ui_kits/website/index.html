@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>颐年智伴 — 智能康养设计系统</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../components.css">
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<style>
+/* Page layer only — layout, composition, narrative surfaces */
+.uikit-shell{width:100%;max-width:1184px;margin:0 auto;overflow:hidden;display:flex;flex-direction:column}
+.uikit-sidebar,.uikit-main,.uikit-toolbar{min-width:0}
+[data-component]{min-width:0;max-width:100%;overflow:hidden}
+.uikit-toolbar{display:flex;align-items:center;gap:var(--space-2)}
+.uikit-responsive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-5)}
+.uikit-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+.uikit-truncate{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uikit-nowrap{white-space:nowrap;flex-shrink:0}
+.uikit-action-cell{display:flex;align-items:center;gap:8px;min-width:0;max-width:160px;overflow:hidden}
+.uikit-action{min-width:0;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Page composition */
+.page-hero{background:var(--color-primary);color:var(--primary-foreground);padding:var(--space-8) var(--space-6);text-align:center}
+.page-hero .hero-heading{font-family:var(--font-heading);font-size:var(--font-size-h1);font-weight:var(--font-weight-h1);line-height:var(--line-height-h1);color:var(--primary-foreground);margin:0 0 var(--space-2);text-wrap:balance;word-break:keep-all}
+.page-hero .hero-sub{font-family:var(--font-body);font-size:var(--font-size-lead);font-weight:var(--font-weight-lead);line-height:var(--line-height-lead);color:rgba(255,255,255,0.88);margin:0 0 var(--space-6);max-width:520px;margin-left:auto;margin-right:auto}
+.hero-cta-row{display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap}
+
+.page-section{padding:var(--space-7) var(--space-6)}
+.page-section-title{font-family:var(--font-heading);font-size:var(--font-size-h2);font-weight:var(--font-weight-h2);line-height:var(--line-height-h2);color:var(--color-on-surface);margin:0 0 var(--space-2);text-wrap:balance;word-break:keep-all}
+.page-section-desc{font-family:var(--font-body);font-size:var(--font-size-body);font-weight:var(--font-weight-body);line-height:var(--line-height-body);color:var(--color-on-surface-variant);margin:0 0 var(--space-6);max-width:600px}
+
+.stat-strip{display:flex;gap:var(--space-5);padding:var(--space-5) 0;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);margin:var(--space-6) 0}
+.stat-item{flex:1;min-width:0;text-align:center}
+.stat-value{font-family:var(--font-heading);font-size:var(--font-size-h2);font-weight:var(--font-weight-h2);color:var(--color-primary);line-height:1.2;font-variant-numeric:tabular-nums}
+.stat-label{font-family:var(--font-body);font-size:var(--font-size-caption);color:var(--color-muted-foreground);margin-top:var(--space-1)}
+
+.reminder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-5)}
+.reminder-card .card-icon-row i{color:var(--color-primary)}
+
+.health-list{display:flex;flex-direction:column;gap:var(--space-3)}
+.health-row{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-4);background:var(--color-surface);border-radius:var(--radius-xl);border:1px solid var(--color-border)}
+.health-row-icon{width:40px;height:40px;border-radius:var(--radius-full);background:var(--color-primary-container);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.health-row-icon i{color:var(--color-primary);width:20px;height:20px}
+.health-row-content{flex:1;min-width:0}
+.health-row-title{font-family:var(--font-body);font-size:var(--font-size-body);font-weight:600;color:var(--color-on-surface);margin:0 0 2px}
+.health-row-desc{font-family:var(--font-body);font-size:var(--font-size-caption);color:var(--color-muted-foreground);margin:0}
+.health-row-action{flex-shrink:0}
+
+.form-section{display:flex;flex-direction:column;gap:var(--space-5);max-width:480px}
+.form-row{display:flex;gap:var(--space-4)}
+.form-row .input-wrapper{flex:1;min-width:0}
+
+.modal-preview{max-width:420px;margin:var(--space-5) auto 0}
+
+.screen-nav{display:flex;gap:var(--space-2);padding:var(--space-4) var(--space-6);border-bottom:1px solid var(--color-border);background:var(--color-surface)}
+.screen-nav button{font-family:var(--font-body);font-size:var(--font-size-body);font-weight:var(--font-weight-body);color:var(--color-on-surface-variant);background:transparent;border:none;border-bottom:2px solid transparent;padding:var(--space-2) var(--space-4);cursor:pointer;transition:color .15s,border-color .15s;white-space:nowrap}
+.screen-nav button:hover{color:var(--color-on-surface);border-bottom-color:var(--color-on-surface-variant)}
+.screen-nav button.active{color:var(--color-primary);border-bottom-color:var(--color-primary);font-weight:600}
+
+.page-footer{padding:var(--space-5) var(--space-6);border-top:1px solid var(--color-border);text-align:center}
+.page-footer p{font-family:var(--font-body);font-size:var(--font-size-caption);color:var(--color-muted-foreground);margin:0}
+
+.weather-card{background:var(--color-primary-container);border:1px solid var(--color-primary)}
+.weather-card .card-title{color:var(--color-primary)}
+.weather-card .card-body{color:var(--color-on-primary-container)}
+
+@media (max-width:900px){
+  .reminder-grid{grid-template-columns:minmax(0,1fr)}
+  .form-row{flex-direction:column}
+}
+@media (max-width:640px){
+  .screen-nav{flex-wrap:wrap}
+  .stat-strip{flex-direction:column;gap:var(--space-3);align-items:flex-start;padding:var(--space-3) 0}
+  .stat-item{text-align:left}
+  .hero-cta-row{flex-direction:column;align-items:stretch}
+  .page-hero{padding:var(--space-5) var(--space-4)}
+  .page-section{padding:var(--space-5) var(--space-4)}
+}
+</style>
+</head>
+<body style="margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-family-base)">
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+/* Screen data */
+const reminders = [
+  { title: '智能提醒', desc: '下午三点服用降压药', icon: 'bell', tag: '待处理', tagClass: 'tag--warning' },
+  { title: '健康日报', desc: '今日步数已达 4,200 步', icon: 'heart-pulse', tag: '正常', tagClass: 'tag--success' },
+  { title: '家人关怀', desc: '女儿发送了本周照片', icon: 'users', tag: '新消息', tagClass: 'tag--default' },
+  { title: '一键求助', desc: '紧急联系人已就绪', icon: 'phone-call', tag: '已就绪', tagClass: 'tag--success' },
+];
+
+const healthItems = [
+  { title: '血压监测', desc: '今日血压 128/82 mmHg，状态平稳', icon: 'activity', status: '正常', statusClass: 'tag--success' },
+  { title: '用药记录', desc: '上午降压药已按时服用', icon: 'pill', status: '已完成', statusClass: 'tag--success' },
+  { title: '睡眠质量', desc: '昨晚深睡 4.2 小时，总时长 7.1 小时', icon: 'moon', status: '良好', statusClass: 'tag--success' },
+  { title: '血糖检测', desc: '空腹血糖 6.1 mmol/L', icon: 'droplets', status: '偏高', statusClass: 'tag--warning' },
+  { title: '运动步数', desc: '目标 6,000 步，已完成 4,200 步', icon: 'footprints', status: '进行中', statusClass: 'tag--warning' },
+  { title: '体温记录', desc: '今日体温 36.5°C', icon: 'thermometer', status: '正常', statusClass: 'tag--success' },
+];
+
+function ScreenDashboard() {
+  return (
+    <div>
+      {/* Hero */}
+      <div className="page-hero">
+        <h1 className="hero-heading">颐年智伴</h1>
+        <p className="hero-sub">温暖守护每一天，让科技陪伴银发生活</p>
+        <div className="hero-cta-row">
+          <button className="btn btn-primary btn-lg" data-component="button">开始使用</button>
+          <button className="btn btn-ghost btn-lg" data-component="button" style={{color:'rgba(255,255,255,0.9)',border:'1.5px solid rgba(255,255,255,0.4)'}}>了解更多</button>
+        </div>
+      </div>
+
+      {/* Stats strip */}
+      <div className="page-section" style={{paddingBottom:0}}>
+        <div className="stat-strip">
+          <div className="stat-item">
+            <div className="stat-value">7.1</div>
+            <div className="stat-label">昨晚睡眠（小时）</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-value">4,200</div>
+            <div className="stat-label">今日步数</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-value">128/82</div>
+            <div className="stat-label">血压 mmHg</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-value">36.5</div>
+            <div className="stat-label">体温 °C</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Reminder cards */}
+      <div className="page-section">
+        <h2 className="page-section-title">智能提醒</h2>
+        <p className="page-section-desc">今日待办与健康提醒，一切尽在掌握</p>
+        <div className="reminder-grid">
+          {reminders.map((r, i) => (
+            <div className="card reminder-card" key={i} data-component="card">
+              <div className="card-icon-row">
+                <i data-lucide={r.icon} style={{width:'var(--size-icon-lg)',height:'var(--size-icon-lg)',display:'inline-block'}}></i>
+                <span className="card-title uikit-truncate" style={{flex:1,minWidth:0}}>{r.title}</span>
+                <span className={`tag ${r.tagClass}`} data-component="tag">{r.tag}</span>
+              </div>
+              <p className="card-desc">{r.desc}</p>
+              <div style={{marginTop:'var(--space-3)'}}>
+                <button className={`card-action ${i === 0 ? '' : 'btn-ghost'}`} data-component="button"
+                  style={i !== 0 ? {background:'transparent',color:'var(--color-primary)',border:'none'} : {}}>
+                  {i === 0 ? '查看详情' : i === 2 ? '查看照片' : '了解更多'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScreenHealth() {
+  return (
+    <div className="page-section">
+      <h2 className="page-section-title">健康日报</h2>
+      <p className="page-section-desc">今日各项健康指标一览</p>
+
+      {/* Weather card */}
+      <div className="card weather-card" data-component="card" style={{marginBottom:'var(--space-5)'}}>
+        <div className="card-icon-row">
+          <i data-lucide="cloud-sun" style={{width:'var(--size-icon-lg)',height:'var(--size-icon-lg)',display:'inline-block'}}></i>
+          <span className="card-title">今日天气</span>
+          <span className="tag tag--default uikit-nowrap" data-component="tag" style={{marginLeft:'auto'}}>晴转多云</span>
+        </div>
+        <p className="card-body" style={{marginBottom:0}}>气温 18–26°C，适合户外散步。紫外线中等，建议做好防晒。</p>
+      </div>
+
+      {/* Health list */}
+      <div className="health-list">
+        {healthItems.map((item, i) => (
+          <div className="health-row" key={i}>
+            <div className="health-row-icon">
+              <i data-lucide={item.icon}></i>
+            </div>
+            <div className="health-row-content">
+              <p className="health-row-title uikit-truncate">{item.title}</p>
+              <p className="health-row-desc uikit-truncate">{item.desc}</p>
+            </div>
+            <div className="health-row-action">
+              <span className={`tag ${item.statusClass}`} data-component="tag">{item.status}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Disabled state example */}
+      <div style={{marginTop:'var(--space-5)',display:'flex',gap:'var(--space-3)',alignItems:'center'}}>
+        <button className="btn btn-primary btn-md" data-component="button" disabled>导出报告</button>
+        <button className="btn btn-secondary btn-md" data-component="button">分享给家人</button>
+      </div>
+    </div>
+  );
+}
+
+function ScreenSettings() {
+  return (
+    <div className="page-section">
+      <h2 className="page-section-title">个人设置</h2>
+      <p className="page-section-desc">管理您的个人信息与偏好设置</p>
+
+      <div className="form-section">
+        <div className="form-row">
+          <div className="input-wrapper" data-component="input">
+            <label className="input-label">姓名</label>
+            <input className="input-field" type="text" placeholder="请输入姓名" value="张秀兰" readOnly />
+          </div>
+          <div className="input-wrapper" data-component="input">
+            <label className="input-label">年龄</label>
+            <input className="input-field" type="text" placeholder="请输入年龄" value="72" readOnly />
+          </div>
+        </div>
+
+        <div className="input-wrapper" data-component="input">
+          <label className="input-label">手机号码</label>
+          <input className="input-field" type="text" placeholder="请输入手机号码" value="138****6789" readOnly />
+        </div>
+
+        <div className="input-wrapper" data-component="input">
+          <label className="input-label">紧急联系人</label>
+          <input className="input-field" type="text" placeholder="请输入紧急联系人" value="张明（女儿）" readOnly />
+        </div>
+
+        <div className="input-wrapper" data-component="input">
+          <label className="input-label">用药提醒时间</label>
+          <input className="input-field" type="text" placeholder="请设置提醒时间" value="08:00、14:00、20:00" readOnly />
+          <span className="helper-text">每日三次，服药后请点击确认</span>
+        </div>
+
+        <div className="input-wrapper" data-component="input">
+          <label className="input-label">详细地址</label>
+          <input className="input-field" type="text" placeholder="请输入地址" value="北京市朝阳区建国路88号" readOnly />
+        </div>
+
+        {/* Error state example */}
+        <div className="input-wrapper" data-component="input">
+          <label className="input-label">验证码</label>
+          <input className="input-field error" type="text" placeholder="请输入验证码" />
+          <span className="error-text">验证码不正确，请重新输入</span>
+        </div>
+
+        <div style={{display:'flex',gap:'var(--space-3)',alignItems:'center',marginTop:'var(--space-2)'}}>
+          <button className="btn btn-primary btn-lg" data-component="button">保存设置</button>
+          <button className="btn btn-outline btn-md" data-component="button">取消</button>
+        </div>
+      </div>
+
+      {/* Modal preview */}
+      <div className="modal-preview" data-component="modal">
+        <div className="modal-backdrop">
+          <div className="modal-dialog">
+            <div className="modal-icon-area">
+              <i data-lucide="check-circle" style={{width:'28px',height:'28px',display:'inline-block'}}></i>
+            </div>
+            <h3 className="modal-title">设置已保存</h3>
+            <p className="modal-message">您的个人信息与偏好设置已更新成功</p>
+            <div className="modal-actions">
+              <button className="modal-btn confirm" data-component="button">确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [screen, setScreen] = useState('dashboard');
+  const screens = {
+    dashboard: ScreenDashboard,
+    health: ScreenHealth,
+    settings: ScreenSettings,
+  };
+  const ScreenComponent = screens[screen];
+
+  return (
+    <div className="uikit-shell" data-layout-guard="uikit-v1">
+      {/* Top Navigation */}
+      <nav className="top-nav" data-component="navigation">
+        <span className="top-nav-logo">颐年智伴</span>
+        <div className="top-nav-links">
+          <a href="#" className={`top-nav-link ${screen==='dashboard'?'active':''}`} onClick={e=>{e.preventDefault();setScreen('dashboard')}}>首页</a>
+          <a href="#" className={`top-nav-link ${screen==='health'?'active':''}`} onClick={e=>{e.preventDefault();setScreen('health')}}>健康</a>
+          <a href="#" className={`top-nav-link ${screen==='settings'?'active':''}`} onClick={e=>{e.preventDefault();setScreen('settings')}}>我的</a>
+        </div>
+        <div className="top-nav-actions">
+          <div className="top-nav-avatar">
+            <i data-lucide="user" style={{width:'18px',height:'18px',display:'inline-block',color:'var(--color-on-primary)'}}></i>
+          </div>
+        </div>
+      </nav>
+
+      {/* Tab navigation for secondary routing */}
+      <div className="screen-nav">
+        <button className={screen==='dashboard'?'active':''} onClick={()=>setScreen('dashboard')}>首页仪表盘</button>
+        <button className={screen==='health'?'active':''} onClick={()=>setScreen('health')}>健康报告</button>
+        <button className={screen==='settings'?'active':''} onClick={()=>setScreen('settings')}>个人设置</button>
+      </div>
+
+      {/* Main content */}
+      <main className="uikit-main" style={{flex:1,minWidth:0}}>
+        <ScreenComponent />
+      </main>
+
+      {/* Footer */}
+      <footer className="page-footer">
+        <p>2026 颐年智伴 — 温暖守护每一天</p>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "slug": "input",
+  "schemaVersion": 2,
+  "name": "输入框",
+  "category": "form",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "semanticTypeCandidates": [
+    { "type": "TextInput", "evidence": "Form input with label, warm border, focus transition" }
+  ],
+  "variantDimensions": [
+    { "axis": "state", "values": ["default", "focused", "error", "disabled"] },
+    { "axis": "size", "values": ["md", "lg"] }
+  ],
+  "representativeVariants": [
+    {
+      "name": "Default Large",
+      "whySelected": "Primary text input — large for elderly accessibility",
+      "traits": { "background": "var(--color-surface)", "border": "1.5px solid var(--color-outline)", "borderRadius": "var(--radius-lg)", "padding": "var(--space-4) var(--space-5)", "fontSize": "var(--font-size-body)", "height": "var(--size-input-lg)", "color": "var(--color-on-surface)" },
+      "childrenDigest": "label(text, above) + input-field + helper-text(text, below, optional)"
+    },
+    {
+      "name": "Focused",
+      "whySelected": "Active state with warm teal ring",
+      "traits": { "borderColor": "var(--color-primary)", "boxShadow": "0 0 0 3px rgba(46,139,123,0.15)" },
+      "childrenDigest": "same as default"
+    },
+    {
+      "name": "Error",
+      "whySelected": "Validation error with warm red tone",
+      "traits": { "borderColor": "var(--color-error)", "helperTextColor": "var(--color-error)" },
+      "childrenDigest": "label + input-field + error-message(text, below)"
+    }
+  ],
+  "anatomy": "wrapper > label(text) + input + [helper-text(text)]",
+  "structurePatterns": ["labeled-input", "search-input"],
+  "usageHints": { "priorityHint": 3, "minHeight": "48px for accessibility", "density": "spacious" },
+  "doNotInvent": ["textarea", "select-dropdown", "input-with-icon"],
+  "unknowns": [],
+  "keyInsightSeed": "大字号标签、宽高触控友好、聚焦过渡温润"
+}

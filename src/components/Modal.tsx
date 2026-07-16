@@ -1,72 +1,47 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { CheckCircle } from 'lucide-react';
+import { X } from 'lucide-react';
+import { useEffect, useId, useRef, type ReactNode } from 'react';
 
-interface ModalProps {
+type ModalProps = {
   open: boolean;
-  onClose: () => void;
   title: string;
-  message: string;
-  icon?: React.ReactNode;
-  confirmText?: string;
-  className?: ClassValue;
-}
+  description?: string;
+  onClose: () => void;
+  children: ReactNode;
+  size?: 'default' | 'wide';
+};
 
-export function Modal({
-  open,
-  onClose,
-  title,
-  message,
-  icon,
-  confirmText = '确认',
-  className,
-}: ModalProps) {
+export function Modal({ open, title, description, onClose, children, size = 'default' }: ModalProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    closeRef.current?.focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-foreground/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      
-      {/* Dialog */}
-      <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div
-          className={twMerge(
-            clsx(
-              'w-full max-w-md',
-              'bg-surface rounded-radius-xl shadow-5',
-              'p-8 flex flex-col items-center text-center',
-              className
-            )
-          )}
-        >
-          {/* Icon area */}
-          <div className="w-14 h-14 rounded-radius-full bg-teal-50 flex items-center justify-center mb-6">
-            {icon || <CheckCircle className="w-7 h-7 text-teal-500" />}
+    <div className="modal-backdrop" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onClose();
+    }}>
+      <section className={`modal ${size === 'wide' ? 'modal-wide' : ''}`} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+        <header className="modal-header">
+          <div>
+            <h2 id={titleId}>{title}</h2>
+            {description && <p>{description}</p>}
           </div>
-          
-          {/* Title */}
-          <h3 className="font-heading font-semibold text-h3 text-foreground mb-2">
-            {title}
-          </h3>
-          
-          {/* Message */}
-          <p className="font-body text-body text-muted-foreground mb-8">
-            {message}
-          </p>
-          
-          {/* Action */}
-          <button
-            className="inline-flex items-center justify-center font-body font-medium bg-teal-500 text-white hover:brightness-97 active:brightness-95 transition-older cursor-pointer h-11 px-6 rounded-radius-md text-body"
-            onClick={onClose}
-          >
-            {confirmText}
+          <button ref={closeRef} className="icon-button" onClick={onClose} aria-label="关闭弹窗" title="关闭">
+            <X aria-hidden="true" />
           </button>
-        </div>
-      </div>
+        </header>
+        <div className="modal-body">{children}</div>
+      </section>
     </div>
   );
 }

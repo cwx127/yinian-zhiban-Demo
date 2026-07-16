@@ -1,43 +1,54 @@
-import { useAppStore } from './store/useAppStore';
-import { Navigation, Modal } from './components';
-import { Dashboard, HealthReport, Settings } from './pages';
+import { ShieldCheck, UserRound, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Toast } from './components/Toast';
+import type { AppRole } from './types';
+import { FamilyApp } from './views/FamilyApp';
+import { SeniorApp } from './views/SeniorApp';
+
+const ROLE_KEY = 'zhiyin-active-role';
 
 export default function App() {
-  const currentPage = useAppStore((state) => state.currentPage);
-  const setCurrentPage = useAppStore((state) => state.setCurrentPage);
-  const showModal = useAppStore((state) => state.showModal);
-  const modalTitle = useAppStore((state) => state.modalTitle);
-  const modalMessage = useAppStore((state) => state.modalMessage);
-  const closeModal = useAppStore((state) => state.closeModal);
+  const [role, setRole] = useState<AppRole>(() =>
+    localStorage.getItem(ROLE_KEY) === 'family' ? 'family' : 'senior',
+  );
+  const [toast, setToast] = useState<{ id: number; message: string; tone: 'success' | 'info' } | null>(null);
 
-  const pages = {
-    dashboard: Dashboard,
-    health: HealthReport,
-    settings: Settings,
+  useEffect(() => {
+    localStorage.setItem(ROLE_KEY, role);
+  }, [role]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(null), 3200);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
+
+  const notify = (message: string, tone: 'success' | 'info' = 'success') => {
+    setToast({ id: Date.now(), message, tone });
   };
 
-  const CurrentPage = pages[currentPage];
-
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-      
-      <main className="flex-1 container max-w-5xl mx-auto">
-        <CurrentPage />
-      </main>
-      
-      <footer className="py-5 px-6 border-t border-border text-center">
-        <p className="font-body text-caption text-muted-foreground mb-0">
-          © 2026 颐年智伴 — 温暖守护每一天
-        </p>
-      </footer>
+    <div className="app-root" data-role={role}>
+      <header className="product-bar">
+        <a className="product-brand" href="#top" aria-label="智伴银龄首页">
+          <span className="brand-mark"><ShieldCheck aria-hidden="true" /></span>
+          <span><strong>智伴银龄</strong><small>居家安心陪伴</small></span>
+        </a>
+        <div className="role-switch" aria-label="演示视角">
+          <button className={role === 'senior' ? 'active' : ''} onClick={() => setRole('senior')}>
+            <UserRound aria-hidden="true" /><span>老人端</span>
+          </button>
+          <button className={role === 'family' ? 'active' : ''} onClick={() => setRole('family')}>
+            <Users aria-hidden="true" /><span>家属端</span>
+          </button>
+        </div>
+      </header>
 
-      <Modal
-        open={showModal}
-        onClose={closeModal}
-        title={modalTitle}
-        message={modalMessage}
-      />
+      <div id="top">
+        {role === 'senior' ? <SeniorApp notify={notify} /> : <FamilyApp notify={notify} />}
+      </div>
+
+      {toast && <Toast key={toast.id} message={toast.message} tone={toast.tone} />}
     </div>
   );
 }
